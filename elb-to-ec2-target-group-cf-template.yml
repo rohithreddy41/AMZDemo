@@ -217,14 +217,13 @@ Resources:
             cd /tmp
             yum update -y
             yum install -y httpd24
-            echo "EC2 launched in : ${azValue}" > /var/www/html/index.html
+            echo "EC2 launched in : ${PubSubnetZoneB.AvailabilityZone}" > /var/www/html/index.html
             service httpd start
             /opt/aws/bin/cfn-signal \
               -e $? \
               --stack ${AWS::StackName} \
               --resource AmazonLinuxInstance \
               --region ${AWS::Region}
-              -azValue: !GetAtt PubSubnetZoneB.AvailabilityZone
 
     # Target Group
     EC2TargetGroup:
