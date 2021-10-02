@@ -192,7 +192,7 @@ Resources:
                   CidrIp: 0.0.0.0/0
 
     # Linux Instance running on zone A with Apache running on Port 80
-    AmazonLinuxInstance:
+    AmazonLinuxInstanceZoneA:
       Type: AWS::EC2::Instance
       Properties:
         ImageId:
@@ -217,13 +217,47 @@ Resources:
             cd /tmp
             yum update -y
             yum install -y httpd24
-            echo "EC2 launched in : ${PubSubnetZoneB.AvailabilityZone}" > /var/www/html/index.html
+            echo "EC2 launched in PubSubnetZoneA" > /var/www/html/index.html
             service httpd start
             /opt/aws/bin/cfn-signal \
               -e $? \
               --stack ${AWS::StackName} \
-              --resource AmazonLinuxInstance \
+              --resource AmazonLinuxInstanceZoneA \
               --region ${AWS::Region}
+
+      #Instance in ZoneB
+    AmazonLinuxIntanceZoneB:
+        Type: AWS::EC2::Instance
+        Properties:
+          ImageId:
+            Fn::FindInMap:
+              - RegionToAmazonAMI
+              - Ref: 'AWS::Region'
+              - HVM64
+          InstanceInitiatedShutdownBehavior: stop
+          InstanceType: t2.nano
+          Monitoring: 'true'
+          NetworkInterfaces:
+            - AssociatePublicIpAddress: 'true'
+              DeviceIndex: '0'
+              GroupSet:
+                - !Ref EC2SecurityGroup
+              SubnetId:
+                Ref: PubSubnetZoneB
+          Tenancy: default
+          UserData:
+            Fn::Base64: !Sub |
+              #!/bin/bash -xe
+              cd /tmp
+              yum update -y
+              yum install -y httpd24
+              echo "EC2 launched in PubSubnetZoneB" > /var/www/html/index.html
+              service httpd start
+              /opt/aws/bin/cfn-signal \
+                -e $? \
+                --stack ${AWS::StackName} \
+                --resource PubSubnetZoneB \
+                --region ${AWS::Region}
 
     # Target Group
     EC2TargetGroup:
@@ -243,7 +277,9 @@ Resources:
           Value: '20'
         Targets:
         - Id:
-            Ref: AmazonLinuxInstance
+            Ref: AmazonLinuxInstanceZoneA
+        - Id:
+            Ref: AmazonLinuxIntanceZoneB
           Port: 80
         UnhealthyThresholdCount: 3
         VpcId:
