@@ -303,9 +303,9 @@ Resources:
             - HVM64
         InstanceInitiatedShutdownBehavior: stop
         InstanceType: t2.nano
-        KeyName:
+        #KeyName:
           #Ref: SSHKeyName
-          value: 'MyKP'
+         # value: 'MyKP'
         Monitoring: 'true'
         NetworkInterfaces:
         - AssociatePublicIpAddress: 'true'
