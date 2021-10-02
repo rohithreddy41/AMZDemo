@@ -14,12 +14,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Creates a VPC and a ELB with a EC2 Target Group Associated
 
-Parameters:
 
-    SSHKeyName:
-        Description: 'Name of the ec2 key you need one to use this template'
-        Type: 'AWS::EC2::KeyPair::KeyName'
-        Default: 'choose-key'
 
 Mappings:
 
