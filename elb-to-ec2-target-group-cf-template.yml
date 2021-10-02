@@ -309,7 +309,8 @@ Resources:
         InstanceInitiatedShutdownBehavior: stop
         InstanceType: t2.nano
         KeyName:
-          Ref: SSHKeyName
+          #Ref: SSHKeyName
+          value: 'MyKP'
         Monitoring: 'true'
         NetworkInterfaces:
         - AssociatePublicIpAddress: 'true'
