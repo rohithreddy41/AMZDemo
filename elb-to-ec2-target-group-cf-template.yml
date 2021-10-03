@@ -312,6 +312,19 @@ Resources:
         SecurityGroups:
         - Ref: ELBSecurityGroup
 
+      #VPC FLOW LOG
+    FlowLog:
+      Type: AWS::EC2::FlowLog
+      Properties:
+        DeliverLogsPermissionArn: 'arn:aws:iam::909667553559:role/flowlogsRole'
+        LogDestination: 'arn:aws:logs:us-east-1:909667553559:log-group:EC2FlowLogGroup:*'
+        LogDestinationType: 'cloud-watch-logs'
+        LogGroupName: 'EC2FlowLogGroup'
+        ResourceId:
+          Ref: 'PubSubnetZoneA'
+        ResourceType: 'Subnet'
+        TrafficType: 'ALL'
+
 Outputs:
     ALBHostName:
         Description: 'Application Load Balancer Hostname'
