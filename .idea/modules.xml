@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AMZDemo.iml" filepath="$PROJECT_DIR$/AMZDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Serverless.iml" filepath="$PROJECT_DIR$/Serverless.iml" />
     </modules>
   </component>
 </project>
