@@ -30,9 +30,7 @@ public class LambdaHandler implements RequestHandler<Map<String,String>, String>
         LambdaLogger logger = context.getLogger();
         String response = new String("Hello world");
         Region region = Region.US_EAST_1;
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(
-                "AKIA5HTDJKELQQ564C7Q",
-                "w9IPZEn2voumZjc1cytZWGECSbGBMctwrN2fa7iM");
+        AwsBasicCredentials a
         CloudFormationClient cfClient = CloudFormationClient.builder()
                 .region(region).credentialsProvider(StaticCredentialsProvider.create(awsCreds))
                 .build();
