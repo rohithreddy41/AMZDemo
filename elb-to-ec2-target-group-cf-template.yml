@@ -339,7 +339,7 @@ Resources:
 
 Outputs:
     ALBHostName:
-        Description: 'Application Load Balancer Hostname'
+        Description: 'Application Load Balancer Hostnamee'
         Value:
           !GetAtt ApplicationLoadBalancer.DNSName
 
