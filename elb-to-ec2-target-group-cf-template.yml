@@ -330,7 +330,7 @@ Resources:
       Type: AWS::Serverless::Function
       Properties:
         FunctionName: MyFirstSAMFunction
-        CodeUri: target/Serverless-1.0-SNAPSHOT.jar
+        CodeUri: s3://amzdemo541/Serverless-1.0-SNAPSHOT.jar
         Handler: com.amzdemo.serverless.LambdaHandler::handleRequest
         Runtime: java8
         Description: Java function
