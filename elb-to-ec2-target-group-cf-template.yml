@@ -1,6 +1,7 @@
 
 
 AWSTemplateFormatVersion: 2010-09-09
+Transform: 'AWS::Serverless-2016-10-31'
 Description: Creates a VPC and a ELB with a EC2 Target Group Associated
 
 
@@ -323,6 +324,17 @@ Resources:
           Ref: 'PubSubnetZoneA'
         ResourceType: 'Subnet'
         TrafficType: 'ALL'
+
+    HelloWorldLambdafunction:
+      Type: AWS::Serverless::Function
+      Properties:
+        FunctionName: MyFirstSAMFunction
+        CodeUri: target/Serverless-1.0-SNAPSHOT.jar
+        Handler: com.amzdemo.serverless.LambdaHandler::handleRequest
+        Runtime: java8
+        Description: Java function
+        MemorySize: 512
+        Timeout: 10
 
 Outputs:
     ALBHostName:
