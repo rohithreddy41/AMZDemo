@@ -180,7 +180,7 @@ Resources:
                   SourceSecurityGroupId:
                       Ref: ELBSecurityGroup
 
-    # ELB Security Grouppp allowing Port 80 from anywhere
+    # ELB Security Group allowing Port 80 from anywhere
     ELBSecurityGroup:
         Type: AWS::EC2::SecurityGroup
         Properties:
