@@ -345,7 +345,7 @@ Resources:
           "detail-type": ["EC2 Instance State-change Notification"],
           "detail": {
             "state": ["terminated"]
-            "instance-id": [!Ref AmazonLinuxInstanceZoneA, !Ref AmazonLinuxIntanceZoneB]
+            #"instance-id": [!Ref AmazonLinuxInstanceZoneA, !Ref AmazonLinuxIntanceZoneB]
           }
         }
         State: 'ENABLED'
