@@ -326,16 +326,33 @@ Resources:
         ResourceType: 'Subnet'
         TrafficType: 'ALL'
 
-    HelloWorldLambdafunction:
+    CleanUpdLambdaFunction:
       Type: AWS::Serverless::Function
       Properties:
-        FunctionName: MyFirstSAMFunction
+        FunctionName: CleanUpAfterCFFunction
         CodeUri: s3://amzdemo541/Serverless-1.0-SNAPSHOT.jar
         Handler: com.amzdemo.serverless.LambdaHandler::handleRequest
         Runtime: java8
         Description: Java function
         MemorySize: 512
         Timeout: 10
+
+    CloudWatchEventsRuleToCleanUpLogStreams:
+      Type: AWS::Events::Rule
+      Properties:
+        EventPattern: {
+          "source": ["aws.ec2"],
+          "detail-type": ["EC2 Instance State-change Notification"],
+          "detail": {
+            "state": ["terminated"]
+            "instance-id": [!Ref AmazonLinuxInstanceZoneA, !Ref AmazonLinuxIntanceZoneB]
+          }
+        }
+        State: 'ENABLED'
+        Targets:
+          -
+            Arn: !GetAtt CleanUpdLambdaFunction.Arn
+            Id: !Ref CleanUpdLambdaFunction
 
 Outputs:
     ALBHostName:
