@@ -261,7 +261,7 @@ Resources:
                 --resource PubSubnetZoneB \
                 --region ${AWS::Region}
 
-    # Target Group
+    # Target Groupp
     EC2TargetGroup:
       Type: AWS::ElasticLoadBalancingV2::TargetGroup
       Properties:
