@@ -21,34 +21,8 @@ public class LambdaHandler implements RequestHandler<ScheduledEvent, String> {
     public String handleRequest(ScheduledEvent event, Context context)
     {
         LambdaLogger logger = context.getLogger();
-        Region region = Region.US_EAST_1;
-
-            logger.log("Detail type :  " + event.getDetailType());
-            logger.log("Detail type :  " + event.getDetail());
-            logger.log("Detail type :  " + event.getSource());
-            if(event != null){
-                List<String> resources = event.getResources();
-                if(resources != null){
-                    for(String resource : resources){
-                        logger.log("Resource :  " + resource);
-                    }
-                }
-
-                Map<String, Object> details = event.getDetail();
-                if(details != null){
-                    for(Map.Entry entry : details.entrySet()){
-                        if(entry != null){
-                            logger.log("Key :  " + entry.getKey());
-                            logger.log("Value :  " + entry.getValue());
-
-                        }
-
-                    }
-                }
-            }
-
         //cloud watch logs
-        CloudWatchLogsClient cloudWatchLogsClient = CloudWatchLogsClient.builder().region(region)
+        CloudWatchLogsClient cloudWatchLogsClient = CloudWatchLogsClient.builder().region(Region.US_EAST_1)
                 .build();
         DescribeLogGroupsResponse describeLogGroupsResponse = cloudWatchLogsClient.describeLogGroups();
         List<LogGroup> logGroups = describeLogGroupsResponse.logGroups();
@@ -57,8 +31,25 @@ public class LambdaHandler implements RequestHandler<ScheduledEvent, String> {
             DeleteLogGroupRequest deleteLogGroupRequest = DeleteLogGroupRequest.builder().logGroupName(logGroup.logGroupName()).build();
             cloudWatchLogsClient.deleteLogGroup(deleteLogGroupRequest);
         }
-
-        // log execution details
+        // log details
+        logger.log("Detail type :  " + event.getDetailType());
+        logger.log("Detail type :  " + event.getDetail());
+        logger.log("Detail type :  " + event.getSource());
+        if(event != null){
+            List<String> resources = event.getResources();
+            for(String resource : resources){
+                logger.log("Resource :  " + resource);
+            }
+            Map<String, Object> details = event.getDetail();
+            if(details != null){
+                for(Map.Entry entry : details.entrySet()){
+                    if(entry != null){
+                        logger.log("Key :  " + entry.getKey());
+                        logger.log("Value :  " + entry.getValue());
+                    }
+                }
+            }
+        }
         logger.log("Cleaned up log groups: " + event.getDetailType());
         return "success";
     }

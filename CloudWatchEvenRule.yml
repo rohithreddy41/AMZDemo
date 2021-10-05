@@ -1,38 +1,41 @@
 
 
 
+AWSTemplateFormatVersion: 2010-09-09
+#serverless
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Creates lambda function and cloudwatch role
 
 
+Resources:
 
-CleanUpdLambdaFunction:
-  Type: AWS::Serverless::Function
-  Properties:
-    FunctionName: CleanUpAfterCFFunction
-    CodeUri: s3://amzdemo541/Serverless-1.0-SNAPSHOT.jar
-    Handler: com.amzdemo.serverless.LambdaHandler::handleRequest
-    Runtime: java8
-    Description: Java function
-    MemorySize: 512
-    Timeout: 10
+  CleanUpdLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: CleanUpAfterCFFunction
+      CodeUri: s3://amzdemo541/Serverless-1.0-SNAPSHOT.jar
+      Handler: com.amzdemo.serverless.LambdaHandler::handleRequest
+      Role: arn:aws:iam::909667553559:role/WebAppStack-HelloWorldLambdafunctionRole-1RNMJ5EYRMKBL
+      Runtime: java8
+      Description: Java function
+      MemorySize: 512
+      Timeout: 10
 
-
-CloudWatchEventsRuleToCleanUpLogStreams:
-  Type: AWS::Events::Rule
-  Properties:
-    EventPattern: {
-      "source": ["aws.ec2"],
-      "detail-type": ["EC2 Instance State-change Notification"],
-      "detail": {
-        "state": ["terminated"],
-        "instance-id": ["Ref" :  "AmazonLinuxInstanceZoneA", "Ref" : "AmazonLinuxIntanceZoneB"]
-      }
-    }
-    State: 'ENABLED'
-    Targets:
-      -
-        Arn: !GetAtt CleanUpdLambdaFunction.Arn
-        Id: !Ref CleanUpdLambdaFunction
-
+  CloudWatchEventsRuleToCleanUpLogStreams:
+      Type: AWS::Events::Rule
+      Properties:
+        EventPattern: {
+          "source": [ "aws.ec2" ],
+          "detail-type": [ "EC2 Instance State-change Notification" ],
+          "detail": {
+            "state": [ "terminated" ],
+            "instance-id": [ "Ref": "AmazonLinuxInstanceZoneA", "Ref": "AmazonLinuxIntanceZoneB" ]
+          }
+        }
+        State: 'ENABLED'
+        Targets:
+          - Arn: !GetAtt CleanUpdLambdaFunction.Arn
+            Id: !Ref CleanUpdLambdaFunction
 
 
 
