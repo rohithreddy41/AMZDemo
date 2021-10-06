@@ -161,7 +161,7 @@ Resources:
             RouteTableId:
                 Ref: 'RouteTablePubZoneB'
 
-    #WebApp
+
     # EC2 Security Group Allowing Port 22 and 80 from anywhere
     EC2SecurityGroup:
         Type: AWS::EC2::SecurityGroup
@@ -215,12 +215,12 @@ Resources:
         Tenancy: default
         UserData:
           Fn::Base64: !Sub |
-            #!/bin/bash
+            #!/bin/bash -xe
+            cd /tmp
             yum update -y
-            yum install -y httpd.x86_64
-            systemctl start httpd.service
-            systemctl enable httpd.service
-            echo “Webserver A launched on  $(hostname -f)” > /var/www/html/index.html
+            yum install -y httpd24
+            echo "EC2 launched in PubSubnetZoneA" > /var/www/html/index.html
+            service httpd start
             /opt/aws/bin/cfn-signal \
               -e $? \
               --stack ${AWS::StackName} \
@@ -250,11 +250,11 @@ Resources:
           UserData:
             Fn::Base64: !Sub |
               #!/bin/bash -xe
+              cd /tmp
               yum update -y
-              yum install -y httpd.x86_64
-              systemctl start httpd.service
-              systemctl enable httpd.service
-              echo “Webserver B launched on  $(hostname -f)” > /var/www/html/index.html
+              yum install -y httpd24
+              echo "EC2 launched in PubSubnetZoneB" > /var/www/html/index.html
+              service httpd start
               /opt/aws/bin/cfn-signal \
                 -e $? \
                 --stack ${AWS::StackName} \
