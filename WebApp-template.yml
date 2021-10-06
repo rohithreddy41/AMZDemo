@@ -292,7 +292,7 @@ Resources:
         - Key: Port
           Value: 80
 
-    #ELB (ALB)
+    #ELB(ALB)
     ALBListener:
       Type: AWS::ElasticLoadBalancingV2::Listener
       Properties:
