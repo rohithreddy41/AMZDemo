@@ -193,7 +193,7 @@ Resources:
                   ToPort: 80
                   CidrIp: 0.0.0.0/0
 
-    # Linux Instance running on zone A with Apache running on Port 80
+    #Linux Instance running on zone A with Apache running on Port 80
     AmazonLinuxInstanceZoneA:
       Type: AWS::EC2::Instance
       Properties:
