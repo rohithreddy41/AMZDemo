@@ -321,7 +321,7 @@ Resources:
       Properties:
         DeliverLogsPermissionArn: 'arn:aws:iam::909667553559:role/flowlogsRole'
         LogDestinationType: 'cloud-watch-logs'
-        LogGroupName: 'EC2FlowLogGroup'
+        LogGroupName: 'EC2FlowLogGroup1'
         ResourceId:
           Ref: 'PubSubnetZoneA'
         ResourceType: 'Subnet'
