@@ -219,7 +219,7 @@ Resources:
             cd /tmp
             yum update -y
             yum install -y httpd24
-            echo "(CREATE) EC2 launched in PubSubnetZoneA" > /var/www/html/index.html
+            echo "CREATE EC2 launched in PubSubnetZoneA" > /var/www/html/index.html
             service httpd start
             /opt/aws/bin/cfn-signal \
               -e $? \
@@ -253,7 +253,7 @@ Resources:
               cd /tmp
               yum update -y
               yum install -y httpd24
-              echo "(Create) EC2 launched in PubSubnetZoneB" > /var/www/html/index.html
+              echo "Create EC2 launched in PubSubnetZoneB" > /var/www/html/index.html
               service httpd start
               /opt/aws/bin/cfn-signal \
                 -e $? \
