@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 
-// Handler value: example.Handler
 public class LambdaHandler implements RequestHandler<ScheduledEvent, String> {
     @Override
     public String handleRequest(ScheduledEvent event, Context context)
